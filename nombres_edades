@@ -1,0 +1,71 @@
+nombres = []
+edades = []
+estudiantes = 0 
+
+def menu_opciones():
+    while True:
+        print("\n¿Qué acción desea realizar?: ")
+        print('*  1) Ingresar nombres')
+        print('*  2) Ingresar edades')
+        print('*  3) Mostrar el estudiante con mayor edad')
+        print('*  4) Salir del sistema')
+        opcion = input("Ingrese la opción: ")
+        
+        if opcion.isdigit():
+            opcion = int(opcion)
+            if opcion in [1, 2, 3, 4]:
+                return opcion
+            else:
+                print("Opción no válida. Por favor, ingrese un número entre 1 y 4.")
+        else:
+            print("Entrada no válida. Por favor, ingrese solo números.")
+
+def ingreso_personal():
+    global estudiantes
+    estudiantes = int(input("\nIngrese el número de personas a registrar (1-10): "))
+    while estudiantes < 1 or estudiantes > 10:
+        print("Número de personas no válido. Máximo 10 personas y no menos de 1.")
+        estudiantes = int(input("Ingrese el número de personas a registrar (1-10): "))
+
+    for i in range(estudiantes):
+        nombre = input(f"Ingrese el nombre del estudiante {i+1}: ")
+        nombres.append(nombre)
+
+def ingreso_edad():
+    for j in range(estudiantes):
+        while True:
+            try:
+                edad = int(input(f"Ingrese la edad del estudiante {nombres[j]}: "))
+                edades.append(edad)
+                break
+            except ValueError:
+                print("Por favor, ingrese un número válido para la edad.")
+
+def mostrar_personal():
+    if not edades:
+        print("No se han ingresado edades.")
+        return
+
+    edad_mayor = max(edades)
+    indice_edad_mayor = edades.index(edad_mayor)
+    nombre_edad_mayor = nombres[indice_edad_mayor]
+    print(f"\nEl estudiante con la mayor edad es {nombre_edad_mayor} con {edad_mayor} años.")
+
+def main():
+    print("------------------- Bienvenido -------------------")
+    
+    while True:
+        caso = menu_opciones()
+        
+        if caso == 1:
+            ingreso_personal()
+        elif caso == 2:
+            ingreso_edad()
+        elif caso == 3:
+            mostrar_personal()
+        elif caso == 4:
+            print("Saliendo del sistema...")
+            break
+        print("")
+
+main()
