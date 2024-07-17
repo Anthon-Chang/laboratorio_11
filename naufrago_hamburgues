@@ -1,0 +1,64 @@
+def menu_opciones():
+    print("\n¿Qué acción desea realizar?")
+    print("1) Ingresar número de hamburguesas")
+    print("2) Calcular total a pagar")
+    print("3) Salir")
+    return int(input("Ingresar la opción: "))
+
+def validacion_menu(opcion):
+    while opcion < 1 or opcion > 3:
+        print("Error, esa opción no existe.")
+        print("\nMenú de opciones")
+        print("1) Ingresar número de hamburguesas")
+        print("2) Calcular total a pagar")
+        print("3) Salir")
+        opcion = int(input("Ingrese la opción: "))
+    return opcion
+
+def tipo_hamburguesa(hamburguesa_num):
+    print(f"\nElige el tipo de hamburguesa {hamburguesa_num}:")
+    print("1) Sencilla -------------------- $20")
+    print("2) Doble ----------------------- $25")
+    print("3) Triple ---------------------- $28")
+    opcion = int(input("Ingrese la opción: "))
+    while opcion < 1 or opcion > 3:
+        print("Opción inválida, pruebe de nuevo.")
+        opcion = int(input("Ingrese la opción: "))
+    return opcion
+
+def calculo_hamburguesa(num_hamburguesas):
+    precios = {1: 20, 2: 25, 3: 28}
+    suma_hamburguesas = 0
+
+    for i in range(num_hamburguesas):
+        tipo = tipo_hamburguesa(i + 1)
+        suma_hamburguesas += precios[tipo]
+
+    pago_tarjeta = input("¿Va a pagar con tarjeta de crédito? (si/no): ").strip().lower()
+    if pago_tarjeta == "si":
+        suma_hamburguesas *= 1.05
+
+    print(f"\nEl total a pagar es: ${suma_hamburguesas:.2f}")
+
+def main():
+    print("--------- Bienvenido al Náufrago Satisfecho ----------")
+    
+    opcion = menu_opciones()
+    opcion = validacion_menu(opcion)
+
+    while opcion != 3:
+        if opcion == 1:
+            num_hamburguesas = int(input("\nIngrese el número de hamburguesas que va a comprar: "))
+            opcion = menu_opciones()
+            opcion = validacion_menu(opcion)
+        elif opcion == 2:
+            if 'num_hamburguesas' in locals():
+                calculo_hamburguesa(num_hamburguesas)
+            else:
+                print("\nPrimero ingrese el número de hamburguesas.")
+            opcion = menu_opciones()
+            opcion = validacion_menu(opcion)
+    
+    print("Muchas gracias")
+
+main()
